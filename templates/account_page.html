@@ -1,0 +1,12 @@
+{% extends 'super.html'%} 
+{%block content%}
+
+{%if user.is_authenticated%}
+<h2>welcome {{user.username}}</h2>
+<img src="{{user.avatar.url}}" alt="{{user.username}}">
+{%endif%}
+
+
+
+
+{%endblock content%}

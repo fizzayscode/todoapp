@@ -1,0 +1,43 @@
+{% extends 'super.html'%} {%block content%}
+
+{%if request.user.is_authenticated%}  
+<p>{{request.user}}</p>
+{%endif%}
+<h2>My TODO List</h2>
+<a href="{% url 'create_task'%}">Add Task</a>
+
+<form  method="GET" action="{% url 'searchposts' %}" >
+  <input type="text" name="q" >
+  <input type="submit" value="search" name="submit">
+</form>
+
+
+<table>
+  <tr>
+    <th>Item</th>
+    <th>view-task</th>
+    <th>edit-task</th>
+    <th>delete-task</th>
+  </tr>
+
+
+  {% for task in tasks%}
+  <tr>
+    <td>{{task.name}}</td>
+    <td><a href="{%url 'details' task.id%}">view</a></td>
+    <td><a href="{%url 'update_task' task.id%}">Edit</a></td>
+    <td><a href="{%url 'delete_task' task.id%}">delete</a></td>
+  </tr>
+  <!-- like a condition for template syntax if the for loop is empty execute whats below -->
+  {% empty %}
+  {%if ones is 'normal'%}
+  <h4>empty todo list </h4>
+  <p>click <a href="#"> here</a> to add an item </p>
+  {%else%}
+  <p>no search result</p>
+  {%endif%}
+  {%endfor%}
+</table>
+
+
+{%endblock content%}
