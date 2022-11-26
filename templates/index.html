@@ -15,7 +15,7 @@
 </form>
 
 <div class="todo-list--container section">
-  {% for task in tasks%}
+  {% for task in page_obj%}
   <div class="single-task ">
     <a href="{%url 'details' task.id%}">
       <div>
@@ -28,5 +28,11 @@
   {%endfor%} 
 </div>
 <!-- like a condition for template syntax if the for loop is empty execute whats below -->
+<div class="pages_list">
+  {%for i in pages_list%}
+  <a href="?page={{i}}">{{i}}</a>
+  {%endfor%}
+</div>
+
 
 {%endblock content%}

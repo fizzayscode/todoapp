@@ -6,14 +6,26 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.core.paginator import Paginator, PageNotAnInteger,EmptyPage
 
 
 @login_required(login_url='login')
 def index(request):
-    ones='normal'
     user=request.user
     tasks=Task.objects.filter(user=user)
-    context={'tasks':tasks, "ones":ones}
+    
+    p = Paginator(tasks, 5) 
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)  # returns the desired page object
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = p.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        page_obj = p.page(p.num_pages)
+    pages_list=[i for i in range(1,p.num_pages+1)]
+    context={'tasks':tasks, "page_obj":page_obj , "pages_list": pages_list}
     return render(request,"index.html",context)
 
 def details(request, id):

@@ -76,3 +76,8 @@
 .completed{
     text-decoration: line-through;
 }
+
+.pages-list{
+    display: flex;
+    
+}
